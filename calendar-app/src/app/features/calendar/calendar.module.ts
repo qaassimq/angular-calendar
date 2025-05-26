@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { CalendarComponent } from './calendar/calendar.component';
@@ -22,6 +23,7 @@ import { EventModalComponent } from './event-modal/event-modal.component';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     DragDropModule
   ],
   exports: [

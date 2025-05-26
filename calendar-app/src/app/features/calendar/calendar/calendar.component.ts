@@ -13,15 +13,15 @@ type ViewType = 'month' | 'week' | 'day';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-      currentDate = new Date();
-      currentView: ViewType = 'month';
-      events: CalendarEvent[] = [];
-      isLoading = false;
-    
-      constructor(
-        private eventService: EventService,
-        private dialog: MatDialog
-      ) {}
+  currentDate = new Date();
+  currentView: ViewType = 'month';
+  events: CalendarEvent[] = [];
+  isLoading = false;
+
+  constructor(
+    private eventService: EventService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.loadEvents();
@@ -67,6 +67,18 @@ export class CalendarComponent implements OnInit {
     this.openEventModal(event.start, event);
   }
 
+  onEventMoved(data: { event: CalendarEvent, newDate: Date }) {
+    const { event, newDate } = data;
+    const updatedEvent: CalendarEvent = {
+      ...event,
+      start: newDate,
+      end: new Date(newDate.getTime() + (event.end.getTime() - event.start.getTime()))
+    };
+    
+    this.eventService.updateEvent(updatedEvent);
+    this.loadEvents();
+  }
+
   private openEventModal(date: Date, event?: CalendarEvent) {
     const dialogRef = this.dialog.open(EventModalComponent, {
       width: '400px',
@@ -77,29 +89,20 @@ export class CalendarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (event) {
-          this.eventService.updateEvent({ ...event, ...result });
-        } else {
-          this.eventService.addEvent({
-            ...result,
-            start: date,
-            end: date
-          });
-        }
-        this.loadEvents();
+      if (!result) return;
+      
+      if (result.delete) {
+        this.eventService.deleteEvent(event!.id);
+      } else if (event) {
+        this.eventService.updateEvent({ ...event, ...result });
+      } else {
+        this.eventService.addEvent({
+          ...result,
+          start: date,
+          end: new Date(date.getTime() + 60 * 60 * 1000) // 1 hour duration by default
+        });
       }
+      this.loadEvents();
     });
-  }
-
-  onEventMoved(data: {event: CalendarEvent, newDate: Date}) {
-    const { event, newDate } = data;
-    const updatedEvent = {
-      ...event,
-      start: newDate,
-      end: newDate
-    };
-    this.eventService.updateEvent(updatedEvent);
-    this.loadEvents();
   }
 }
