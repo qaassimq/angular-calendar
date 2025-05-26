@@ -1,0 +1,30 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+    <div class="calendar-title">
+      <h2>{{ currentDate | date:'MMMM yyyy' }}</h2>
+    </div>
+    <div class="calendar-nav">
+      <button mat-icon-button (click)="onPreviousMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-button (click)="onToday()">Today</button>
+      <button mat-icon-button (click)="onNextMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="calendar-view">
+    <div *ngIf="isLoading" class="loading-overlay">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+    <app-month-view
+      *ngIf="currentView === 'month'"
+      [currentDate]="currentDate"
+      [events]="events"
+      (dateSelected)="onDateSelected($event)"
+      (eventClicked)="onEventClicked($event)"
+      (eventMoved)="onEventMoved($event)">
+    </app-month-view>
+  </div>
+</div>

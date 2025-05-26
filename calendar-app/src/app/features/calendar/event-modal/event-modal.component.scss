@@ -1,0 +1,24 @@
+.form-field {
+  margin-bottom: 16px;
+  width: 100%;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+input[type="color"] {
+  height: 48px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+mat-dialog-content {
+  padding-top: 16px;
+  min-width: 300px;
+}
+
+mat-dialog-actions {
+  padding: 16px 0;
+  margin-bottom: 0;
+}

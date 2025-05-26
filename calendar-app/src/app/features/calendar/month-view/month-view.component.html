@@ -1,0 +1,35 @@
+<div class="calendar-grid">
+  <div class="week-days">
+    <div class="week-day" *ngFor="let day of weekDays">
+      {{ day }}
+    </div>
+  </div>
+
+  <div class="calendar-days">
+    <div
+      *ngFor="let day of calendarDays"
+      class="calendar-day"
+      [class.current-month]="day.isCurrentMonth"
+      [class.today]="day.isToday"
+      (click)="onDateClick(day)"
+      cdkDropList
+      [cdkDropListData]="day"
+      (cdkDropListDropped)="onEventDrop($event)">
+      <div class="day-header">
+        {{ day.date | date:'d' }}
+      </div>
+
+      <div class="events-container">
+        <div
+          *ngFor="let event of day.events"
+          class="event"
+          [style.background-color]="event.color || '#1976d2'"
+          (click)="onEventClick(event, $event)"
+          cdkDrag
+          [cdkDragData]="event">
+          {{ event.title }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

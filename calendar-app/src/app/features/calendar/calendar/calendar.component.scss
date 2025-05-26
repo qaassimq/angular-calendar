@@ -1,0 +1,36 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calendar-title {
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: #1f2937;
+  }
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calendar-view {
+  flex: 1;
+  min-height: 0;
+}
